@@ -23,40 +23,42 @@
  */
 package fr.jetoile.sample.service;
 
-import fr.jetoile.sample.dto.DtoResponse;
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
-import java.time.LocalDateTime;
+import fr.jetoile.sample.dto.DtoResponse;
 
 /**
- * User: khanh
- * To change this template use File | Settings | File Templates.
+ * User: khanh To change this template use File | Settings | File Templates.
  */
 @RestController
 public class SimpleServiceController {
-    private final static Logger log = LoggerFactory.getLogger(SimpleServiceController.class);
 
+	private final static Logger log = LoggerFactory.getLogger(SimpleServiceController.class);
 
-    @RequestMapping("/sample/say/{msg}")
-    public
-    @ResponseBody
-    DtoResponse sayHello(@PathVariable("msg") String message) {
+	@RequestMapping("/sample/say/{msg}")
+	@ResponseBody
+	public DeferredResult<DtoResponse> sayHello(@PathVariable("msg") String message) {
+		DeferredResult<DtoResponse> result = new DeferredResult<>();
 
-
-        DtoResponse response = new DtoResponse();
-        try {
-            response.setMessage(message);
-            response.setTime(LocalDateTime.now());
-        } catch (Exception e) {
-            log.error("internal error: {}", e);
-        }
-        return response;
-    }
+		DtoResponse response = new DtoResponse();
+		try {
+			response.setMessage(message);
+			response.setTime(LocalDateTime.now());
+		} catch (Exception e) {
+			result.setErrorResult("Oh crap....");
+			log.error("internal error: {}", e);
+		}
+		result.setResult(response);
+		
+		return result;
+	}
 
 }
-

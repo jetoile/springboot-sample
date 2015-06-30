@@ -23,35 +23,29 @@
  */
 package fr.jetoile.sample.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import fr.jetoile.sample.serializer.LocalDateTimeToStringSerializer;
-
-import javax.xml.bind.annotation.XmlRootElement;
 import java.time.LocalDateTime;
 
-@XmlRootElement
 public class DtoResponse {
 
-    private String message;
-    @JsonSerialize(using = LocalDateTimeToStringSerializer.class)
-    private LocalDateTime time;
+	private String message;
+	private LocalDateTime time;
 
-    public DtoResponse() {
-    }
+	public DtoResponse() {
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    public LocalDateTime getTime() {
-        return time;
-    }
+	public LocalDateTime getTime() {
+		return time;
+	}
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
+	public void setTime(LocalDateTime time) {
+		this.time = time;
+	}
 }

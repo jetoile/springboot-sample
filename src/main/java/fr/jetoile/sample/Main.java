@@ -1,25 +1,32 @@
 package fr.jetoile.sample;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 public class Main {
 
-    public static void main(String[] args) {
+	@Bean
+	public AfterburnerModule afterburnerModule() {
+		return new AfterburnerModule();
+	}
 
-        ApplicationContext ctx = SpringApplication.run(Main.class, args);
+	@Bean
+	public Jdk8Module jdk8Module() {
+		return new Jdk8Module();
+	}
 
-        System.out.println("Let's inspect the beans provided by Spring Boot:");
+	@Bean
+	public JSR310Module jsr310Module() {
+		return new JSR310Module();
+	}
 
-//        String[] beanNames = ctx.getBeanDefinitionNames();
-//        Arrays.sort(beanNames);
-//        for (String beanName : beanNames) {
-//            System.out.println(beanName);
-//        }
-    }
-
+	public static void main(String[] args) {
+		SpringApplication.run(Main.class, args);
+	}
 }
